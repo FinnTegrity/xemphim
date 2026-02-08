@@ -1,22 +1,100 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xem Phim Cùng Hải Phúc</title>
-    <link rel="shortcut icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2023.ico" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xem Phim Cùng Hải Phúc</title>
+  <meta name="color-scheme" content="dark light" />
+  <link rel="shortcut icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2023.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-    <div class="header" onclick="location.reload()">Xem Phim Cùng Hải Phúc</div>
-    <div class="container">
-        <h1>Danh Sách Phim Mới Cập Nhật</h1>
-        <input type="text" id="searchInput" placeholder="Tìm kiếm phim...">
-        <button id="searchButton">Tìm kiếm</button>
-        <div id="movie-list" class="movie-list"></div>
-        <div id="movie-detail" class="movie-detail"></div>
-        <div id="video-container" class="video-container"></div>
+  <!-- Top bar -->
+  <header class="topbar">
+    <button class="brand" id="homeButton" type="button" title="Trang chủ">
+      <span class="brandDot" aria-hidden="true"></span>
+      <span class="brandText">Xem Phim Cùng Hải Phúc</span>
+    </button>
+
+    <div class="searchWrap" role="search">
+      <label class="srOnly" for="searchInput">Tìm kiếm phim</label>
+      <div class="search">
+        <span class="searchIcon" aria-hidden="true">⌕</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Tìm kiếm phim…"
+          autocomplete="off"
+          inputmode="search"
+        />
+        <button id="clearSearch" class="iconBtn" type="button" title="Xoá">×</button>
+      </div>
+      <button id="searchButton" class="primary" type="button">Tìm</button>
     </div>
-<script src="scripts.js"></script>
+
+    <div class="actions">
+      <button id="tabLatest" class="chip isActive" type="button">Tải thêm gợi ý</button>
+      <button id="tabMyList" class="chip" type="button">My List</button>
+      <button id="themeToggle" class="iconBtn" type="button" title="Đổi giao diện">☾</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <h1>Khám phá phim</h1>
+        <p class="muted" id="subtitle">Danh sách mới cập nhật</p>
+      </div>
+      <div class="heroRight">
+        <div class="sort">
+          <label class="muted" for="sortSelect">Sắp xếp</label>
+          <select id="sortSelect">
+            <option value="recommended" selected>Gợi ý</option>
+            <option value="newest">Mới nhất</option>
+            <option value="az">A → Z</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sectionHead">
+        <h2 id="sectionTitle">Phim mới cập nhật</h2>
+        <div class="sectionMeta muted" id="sectionMeta">—</div>
+      </div>
+
+      <!-- KEEP original IDs to preserve structure/JS hooks -->
+      <div id="movie-list" class="grid" aria-live="polite"></div>
+      <div id="emptyState" class="empty hidden">
+        <div class="emptyCard">
+          <div class="emptyIcon" aria-hidden="true">🎬</div>
+          <h3>Không có kết quả</h3>
+          <p class="muted">Thử từ khoá khác hoặc quay về danh sách mới cập nhật.</p>
+          <div class="emptyActions">
+            <button id="backToLatest" class="primary" type="button">Về phim mới</button>
+          </div>
+        </div>
+      </div>
+      <div id="sentinel" class="sentinel" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <!-- Modal: movie detail (KEEP original IDs inside) -->
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modalBackdrop" data-close="1"></div>
+    <div class="modalCard" role="dialog" aria-modal="true" aria-label="Chi tiết phim">
+      <div class="modalTop">
+        <button class="iconBtn" id="modalClose" type="button" title="Đóng">×</button>
+      </div>
+
+      <div id="movie-detail" class="detail"></div>
+      <div id="video-container" class="player"></div>
+    </div>
+  </div>
+
+  <div id="toastStack" class="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="scripts.js"></script>
 </body>
 </html>
