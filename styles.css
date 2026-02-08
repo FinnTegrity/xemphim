@@ -627,3 +627,13 @@ html.modalOpen { overflow: hidden; }
 [data-action="toggle-theme"]{
   display: none !important;
 }
+
+.brandText--mobile { display: none; }
+
+@media (max-width: 600px){
+  .brandText--desktop { display: none; }
+  .brandText--mobile  { display: inline; }
+
+  /* tuỳ chọn: gọn hơn trên điện thoại */
+  .brand { padding: 8px 10px; gap: 8px; }
+}
